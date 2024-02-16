@@ -2,7 +2,15 @@
 import AddButton from './AddButton.vue';
 import Lists from './Lists.vue';
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
+onMounted(() => {
+    const collect = localStorage.getItem('saved')
+    console.log(collect)
+    let parse = JSON.parse(collect)
+    console.log(parse)
+    todos.value = parse
+})
 
 const todo = ref('')
 const todos = ref([
@@ -18,6 +26,14 @@ const todos = ref([
     }
 ])
 
+// create a function to encapsulate this tasks
+function handleStuff() {
+    const stringify = JSON.stringify(todos.value)
+    console.log(stringify)
+
+    localStorage.setItem('saved', stringify)
+}
+
 const addMyTodo = (message) => {
 // delete this console later: emitted event argument
     console.log(message)
@@ -32,6 +48,7 @@ const addMyTodo = (message) => {
         alert('enter valid string')
     }
     todo.value = "";
+    handleStuff();
 }
 </script>
 
