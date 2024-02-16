@@ -8,7 +8,7 @@ import TodoList from '@/components/Todo-list.vue'
     <h1 class="title">To-Do App</h1>
     <Todo-list />
 
-    <p>Built & Designed with Love by <a href="">Suleiman Hamza</a>using Vue.js 3 + Composition Api</p>
+    <p>Built & Designed with Love by <a href="https://suleiman-hamza.github.io">Suleiman Hamza</a>using Vue.js 3 + Composition Api</p>
   </main>
 </template>
 
