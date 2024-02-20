@@ -2,41 +2,36 @@
 import AddButton from './AddButton.vue';
 import Lists from './Lists.vue';
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 
 onMounted(() => {
-    const collect = localStorage.getItem('saved')
-    console.log(collect)
-    let parse = JSON.parse(collect)
-    console.log(parse)
-    todos.value = parse
+    todos.value = JSON.parse(localStorage.getItem('todos')) || []
+
+    // const sortedTodos = computed(()=> {
+    //     return todos.value.sort(a, b) {
+    //         return a
+    //     }
+    // })
 })
 
 const todo = ref('')
-const todos = ref([
-    {
-        text: 'addidas',
-        isEditng: false,
-        editedText: ""
-    },
-    {
-        text: 'puma',
-        isEditng: false,
-        editedText: ""
-    }
-])
+const todos = ref([])
+const count = ref(0)
+
+
+
 
 // create a function to encapsulate this tasks
-function handleStuff() {
-    const stringify = JSON.stringify(todos.value)
-    console.log(stringify)
 
-    localStorage.setItem('saved', stringify)
-}
+watch(todos, (newValue) =>  {
+    localStorage.setItem('todos', JSON.stringify(newValue))
+}, { deep:true })
+
+watch(count, newValue => {
+    localStorage.setItem('Count', newValue)
+})
 
 const addMyTodo = (message) => {
-// delete this console later: emitted event argument
-    console.log(message)
 // check if todo entry is empty, then push the entered todo text and other properties
     if (todo.value.trim() !== "") {
         todos.value.push({
@@ -47,22 +42,24 @@ const addMyTodo = (message) => {
     } else {
         alert('enter valid string')
     }
+    count.value++
+    
     todo.value = "";
-    handleStuff();
 }
 </script>
 
 <template>
     <section class="input-area">
         <label for="input">Enter a Task</label>
-        <input type="text" id="input" v-model="todo" @keyup.enter="addMyTodo">
+        <input type="text" id="input" v-model="todo" @keyup.enter="addMyTodo(message)">
         <AddButton @add-todo="addMyTodo" />
     </section>
     <section>
         <h2>To-do List</h2>
         <ul class="list">
-            <Lists :todo="todo" :todos="todos"/>
+            <Lists :todo="todo" :todos="todos" />
         </ul>
+        <p>{{ todos }}</p>
     </section>
 </template>
 

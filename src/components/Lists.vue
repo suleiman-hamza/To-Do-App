@@ -4,14 +4,13 @@
             {{ item.text }}
         </span>
         <input 
-            type="text" 
-            autofocus 
+            type="text"
             v-if="item.isEditng" 
             v-model="item.editedText" 
             @keyup.enter="updateTodo(index)"
         >
         <div class="btn-container">
-            <RemoveButton :todo="todo" :todos="todos" @remove-todo="remove(index)"/>
+            <RemoveButton :todo="todo" :todos="todos" @remove-todo="remove(index)" />
             <EditButton @edit-todo="edit(index)" v-if="!item.isEditng"/>
             <UpdateButton @handle-update="handle(index)" v-if="item.isEditng"/>
         </div>
