@@ -34,7 +34,7 @@ watch(count, newValue => {
 const addMyTodo = (message) => {
 // check if todo entry is empty, then push the entered todo text and other properties
     if (todo.value.trim() !== "") {
-        todos.value.push({
+        todos.value.unshift({
             text: todo.value,
             isEditng: false,
             editedText: ""
@@ -59,7 +59,6 @@ const addMyTodo = (message) => {
         <ul class="list">
             <Lists :todo="todo" :todos="todos" />
         </ul>
-        <p>{{ todos }}</p>
     </section>
 </template>
 
