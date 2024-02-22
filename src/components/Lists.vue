@@ -1,7 +1,8 @@
 <template>
     <li v-for="(item, index) in todos" :key="index">
-        <span v-if="!item.isEditng" >
-            {{ item.text }}
+        <input type="checkbox" @change="move(index)" id="check" v-model="item.done">
+        <span v-if="!item.isEditng">
+            {{ item.text }} {{ item.done }}
         </span>
         <input 
             type="text"
@@ -24,8 +25,11 @@ import UpdateButton from './UpdateButton.vue'
 
 let props = defineProps({
     todo: String,
-    todos: Array
+    todos: Array,
+    targetArray: Array
 })
+
+let emits = defineEmits(['handleMove'])
 
 // delete a task, emmitted from removebutton.vue,
 //confirm delete then use array splice methhod withindex to delete.
@@ -59,6 +63,11 @@ const updateTodo = (index) => {
         alert('please enter an item')
     }
 }
+// emit handleMove from radio checkbox
+const move = (index) => {
+  emits('handleMove', index)
+}
+
 </script>
 <style scoped>
 li {
@@ -77,5 +86,8 @@ li {
 .btn-container {
     display: flex;
     gap: 1rem;
+}
+button.radio{
+    color: blue;
 }
 </style>
